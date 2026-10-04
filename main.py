@@ -13,7 +13,10 @@ Base.metadata.create_all(bind=engine)
 # Allow the React frontend to communicate with the backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5174"],
+    allow_origins=[
+    "http://localhost:5174",
+    "https://governed-ai-accelerator-react.vercel.app",
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
