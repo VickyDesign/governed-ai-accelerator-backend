@@ -14,6 +14,7 @@ Base.metadata.create_all(bind=engine)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+    "http://localhost:5173",
     "http://localhost:5174",
     "https://governed-ai-accelerator-react.vercel.app",
 ],
