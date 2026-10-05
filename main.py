@@ -125,3 +125,42 @@ def delete_agent(agent_id: int):
     return {
         "message": f"Agent {agent_id} deleted successfully"
     }
+
+# edit an agent
+@app.put("/api/agents/{agent_id}")
+def update_agent(agent_id: int, agent_data: AgentCreate):
+    db = SessionLocal()
+
+    agent = db.query(Agent).filter(Agent.id == agent_id).first()
+
+    if agent is None:
+        db.close()
+        return {
+            "message": "Agent not found"
+        }
+
+    agent.name = agent_data.name
+    agent.owner = agent_data.owner
+    agent.risk = agent_data.risk
+    agent.status = agent_data.status
+    agent.model = agent_data.model
+    agent.cost = agent_data.cost
+    agent.run = agent_data.run
+
+    db.commit()
+    db.refresh(agent)
+
+    result = {
+        "id": agent.id,
+        "name": agent.name,
+        "owner": agent.owner,
+        "risk": agent.risk,
+        "status": agent.status,
+        "model": agent.model,
+        "cost": agent.cost,
+        "run": agent.run,
+    }
+
+    db.close()
+
+    return result
